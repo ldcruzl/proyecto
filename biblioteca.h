@@ -24,8 +24,8 @@ struct Estudiantes{
     string codigo;
     int edad;
     char sexo;
-    Libro librosPrestados[10];
-    int numLibrosPrestados = 0;
+    int librosPrestados;
+    string libros[5];
 };
 
 void agregarEstudiante(string, string, string, int, char);
@@ -39,4 +39,6 @@ void eliminarLibro(string titulo);
 void inicializarLibros();
 void cargarDatos();
 void guardarDatos();
-#endif 
+void solicitarLibro(string titulo, string codigo);
+void devolverLibro(string codigo, string titulo);
+#endif

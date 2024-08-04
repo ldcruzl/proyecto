@@ -190,25 +190,15 @@ void cargarDatos(){
     ifstream archivoAdministradores("administradores.txt");
     ifstream archivoLibros("libros.txt");
 
-    if (archivoEstudiantes.is_open()) {
-        while (archivoEstudiantes) {
+    if (archivoEstudiantes.is_open()){
+        while (archivoEstudiantes){
             getline(archivoEstudiantes, EST[numEstudiantes].nombre);
             getline(archivoEstudiantes, EST[numEstudiantes].carrera);
             getline(archivoEstudiantes, EST[numEstudiantes].codigo);
             archivoEstudiantes>>EST[numEstudiantes].edad;
             archivoEstudiantes>>EST[numEstudiantes].sexo;
-            archivoEstudiantes>>EST[numEstudiantes].numLibrosPrestados;
-            archivoEstudiantes.ignore();
-
-            for (int j = 0; j < EST[numEstudiantes].numLibrosPrestados; j++) {
-                getline(archivoEstudiantes, EST[numEstudiantes].librosPrestados[j].titulo);
-                getline(archivoEstudiantes, EST[numEstudiantes].librosPrestados[j].autor);
-                archivoEstudiantes>>EST[numEstudiantes].librosPrestados[j].anio;
-                archivoEstudiantes>>EST[numEstudiantes].librosPrestados[j].disponible;
-                archivoEstudiantes.ignore();
-            }
-
-            if (archivoEstudiantes) {
+            archivoEstudiantes.ignore(); 
+            if (archivoEstudiantes){
                 numEstudiantes++;
             }
         }
@@ -251,19 +241,11 @@ void guardarDatos(){
     
     if (archivoEstudiantes.is_open()) {
         for (int i = 0; i < numEstudiantes; i++) {
-            archivoEstudiantes << EST[i].nombre << endl
-                               << EST[i].carrera << endl
-                               << EST[i].codigo << endl
-                               << EST[i].edad << endl
-                               << EST[i].sexo << endl
-                               << EST[i].numLibrosPrestados << endl;
-
-            for (int j = 0; j < EST[i].numLibrosPrestados; j++) {
-                archivoEstudiantes << EST[i].librosPrestados[j].titulo << endl
-                                   << EST[i].librosPrestados[j].autor << endl
-                                   << EST[i].librosPrestados[j].anio << endl
-                                   << EST[i].librosPrestados[j].disponible << endl;
-            }
+            archivoEstudiantes<<EST[i].nombre <<endl
+                               <<EST[i].carrera<<endl
+                               <<EST[i].codigo<<endl
+                               <<EST[i].edad<<endl
+                               <<EST[i].sexo<<endl;
         }
         archivoEstudiantes.close();
     }
@@ -286,5 +268,78 @@ void guardarDatos(){
                           <<biblioteca[i].disponible<<endl;
         }
         archivoLibros.close();
+    }
+}
+
+void solicitarLibro(string codigo, string titulo){
+    bool encontrado=false;
+    int nestudiante=-1;
+
+    for(int i=0; i<numEstudiantes; i++){
+        if(EST[i].codigo==codigo){
+            nestudiante=i;
+            break;
+        }
+    }
+    if(nestudiante==-1){
+        cout<<"Estudiante no encontrado"<<endl;
+        return;
+    }
+    if(EST[nestudiante].librosPrestados>=5){
+        cout<<"Limite de libros prestados excedidos, devuelva un libro"<<endl;
+        return;
+    }
+
+    for(int i=0; i<numLibros; i++){
+        if(biblioteca[i].titulo==titulo){
+            encontrado=true;
+            if(biblioteca[i].disponible){
+                biblioteca[i].disponible = false;
+                EST[nestudiante].libros[EST[nestudiante].librosPrestados] = titulo;
+                EST[nestudiante].librosPrestados++;
+                cout << "Libro '" << biblioteca[i].titulo << "' ha sido solicitado con exito." << endl;
+            } else {
+                cout << "Libro '" << biblioteca[i].titulo << "' no esta disponible actualmente." << endl;
+            }
+            break;
+        }
+    }
+    if(!encontrado){
+        cout<<"Libro no encontrado"<<endl;
+    }
+}
+
+void devolverLibro(string codigo, string titulo){
+    int nestudiante=-1;
+    for(int i=0; i<numEstudiantes; i++){
+        if(EST[i].codigo==codigo){
+            nestudiante=i;
+            break;
+        }
+    }
+    if(nestudiante==-1){
+        cout<<"Estudiante no encontrado"<<endl;
+    }
+    bool libroDevuelto=false;
+    for(int i=0; EST[nestudiante].librosPrestados; i++){
+        if (EST[nestudiante].libros[i] == titulo) {
+            libroDevuelto = true;
+
+            for(int j=0; j<numLibros; j++){
+                if (biblioteca[j].titulo == titulo) {
+                    biblioteca[j].disponible = true;
+                    break;
+                }
+            }
+            for(int k = i; k < EST[nestudiante].librosPrestados - 1; k++) {
+                EST[nestudiante].libros[k] = EST[nestudiante].libros[k + 1];
+            }
+            EST[nestudiante].librosPrestados--;
+            cout << "Libro '" << titulo << "' ha sido devuelto con exito." << endl;
+            break;
+        }
+    }
+    if (!libroDevuelto) {
+        cout << "El libro '" << titulo << "' no esta registrado como prestado por el estudiante." << endl;
     }
 }

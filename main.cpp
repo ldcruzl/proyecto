@@ -64,17 +64,19 @@ int main(){
         if (esAdmin == true){
             cout<<"1. Agregar libro"<<endl;
             cout<<"2. Eliminar libro"<<endl;
-            cout<<"3. Mostrar libros"<<endl;
             cout<<"4. Mostrar datos"<<endl;
-        }else{
+        }
+        else{
             cout<<"3. Mostrar libros"<<endl;
-            cout<<"4. Mostrar datos"<<endl;
+            cout<<"5. Solicitar libro"<<endl;
+            cout<<"6. Devolver libro"<<endl;
         }
         cout<<"0. Salir"<<endl;
         cout<<"Seleccione una opcion: ";cin>>op;
 
         string titulo, autor;
         int anio;
+        string tlibro;
 
         switch (op){
             case 1:
@@ -117,6 +119,18 @@ int main(){
                 }else{
                     mostrarDatosEstudiante();
                 }
+                break;
+            case 5:
+                cin.ignore();
+                cout<<"Ingrese su codigo: ";getline(cin, codigo);
+                cout<<"Ingrese titulo del libro: ";getline(cin, tlibro);
+                solicitarLibro(codigo, tlibro);
+                break;
+            case 6:
+                cin.ignore();
+                cout<<"Ingrese su codigo: ";getline(cin, codigo);
+                cout<<"Ingrese titulo del libro a devolver: ";getline(cin, tlibro);
+                devolverLibro(codigo, tlibro);
                 break;
             case 0:
                 cout<<"Saliendo..."<<endl;
