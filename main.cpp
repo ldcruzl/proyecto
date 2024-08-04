@@ -132,6 +132,13 @@ int main(){
                 cout<<"Ingrese titulo del libro a devolver: ";getline(cin, tlibro);
                 devolverLibro(codigo, tlibro);
                 break;
+            case 7:
+                if (esAdmin == true){
+                    mostrarLibrosPrestadosAdmin();
+                }else{
+                    mostrarLibrosPrestadosEstudiantes();
+                }
+                break;
             case 0:
                 cout<<"Saliendo..."<<endl;
                 guardarDatos();
