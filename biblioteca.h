@@ -39,6 +39,7 @@ void eliminarLibro(string titulo);
 void inicializarLibros();
 void cargarDatos();
 void guardarDatos();
+void mostrarLibrosPrestadosEstudiantes();
 void solicitarLibro(string titulo, string codigo);
 void devolverLibro(string codigo, string titulo);
 #endif
