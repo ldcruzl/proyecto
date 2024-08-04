@@ -139,6 +139,9 @@ int main(){
                     mostrarLibrosPrestadosEstudiantes();
                 }
                 break;
+            case 8:
+                buscarLibro();
+                break;
             case 0:
                 cout<<"Saliendo..."<<endl;
                 guardarDatos();

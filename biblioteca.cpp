@@ -361,3 +361,31 @@ void mostrarLibrosPrestadosEstudiantes(){
         cout << "No hay libros prestados." << endl;
     }
 }
+void mostrarLibrosPrestadosAdmin(){
+    bool hayPrestamos = false;
+
+    for (int i = 0; i < numEstudiantes; i++) {
+        if (EST[i].numLibrosPrestados > 0) {
+            hayPrestamos = true;
+            cout << "Estudiante: " << EST[i].nombre << " (" << EST[i].codigo << ")" << endl;
+            cout << "---------------------------------------------" << endl;
+
+            for (int j = 0; j < EST[i].numLibrosPrestados; j++) {
+                cout << "  Titulo: " << EST[i].librosPrestados[j].titulo << endl;
+                cout << "  Autor: " << EST[i].librosPrestados[j].autor << endl;
+                cout << "  Anio: " << EST[i].librosPrestados[j].anio << endl;
+                cout << "  Disponible: ";
+                if (EST[i].librosPrestados[j].disponible) {
+                    cout << "No prestado" << endl;
+                } else {
+                    cout << "Si" << endl;
+                }
+                cout << "---------------------------------------------" << endl;
+            }
+        }
+    }
+
+    if (!hayPrestamos) {
+        cout << "No hay libros prestados" << endl;
+    }
+}

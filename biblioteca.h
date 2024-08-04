@@ -26,6 +26,8 @@ struct Estudiantes{
     char sexo;
     int librosPrestados;
     string libros[5];
+    int numLibrosPrestados = 0;
+
 };
 
 void agregarEstudiante(string, string, string, int, char);
@@ -42,4 +44,5 @@ void guardarDatos();
 void mostrarLibrosPrestadosEstudiantes();
 void solicitarLibro(string titulo, string codigo);
 void devolverLibro(string codigo, string titulo);
+void buscarLibro();
 #endif
