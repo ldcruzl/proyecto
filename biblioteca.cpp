@@ -343,3 +343,21 @@ void devolverLibro(string codigo, string titulo){
         cout << "El libro '" << titulo << "' no esta registrado como prestado por el estudiante." << endl;
     }
 }
+void mostrarLibrosPrestadosEstudiantes(){
+    bool hayPrestamos = false;
+
+    for (int i = 0; i < numEstudiantes; i++) {
+        if (EST[i].numLibrosPrestados > 0) {
+            hayPrestamos = true;
+            cout << "Estudiante: " << EST[i].nombre << " (" << EST[i].codigo << ")" << endl;
+            for (int j = 0; j < EST[i].numLibrosPrestados; j++) {
+                cout << "  Libro: " << EST[i].librosPrestados[j].titulo << " por " << EST[i].librosPrestados[j].autor << endl;
+            }
+            cout<<"---------------------------------------------" << endl;
+        }
+    }
+
+    if (!hayPrestamos) {
+        cout << "No hay libros prestados." << endl;
+    }
+}
